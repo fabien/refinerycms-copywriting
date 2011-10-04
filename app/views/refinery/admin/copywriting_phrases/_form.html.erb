@@ -1,5 +1,6 @@
 <%= form_for [main_app, :refinery_admin, @copywriting_phrase] do |f| -%>
   <%= hidden_field_tag :switch_locale, @current_locale %>
+  <%= hidden_field_tag :filter_scope, @scope if @scope %>
 
   <%= render :partial => "/refinery/admin/error_messages", :locals => {
           :object => @copywriting_phrase,

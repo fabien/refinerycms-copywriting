@@ -4,7 +4,8 @@ module Refinery
       before_filter :find_all_locales, :find_locale, :find_scope, :find_all_scopes
 
       crudify :'refinery/copywriting_phrase', :searchable => false,
-              :title_attribute => 'name', :xhr_paging => true, :sortable => false
+              :title_attribute => 'name', :xhr_paging => true, :sortable => false,
+              :redirect_to_url => 'main_app.url_for({ :action => :index, :filter_scope => @scope, :switch_locale => @current_locale })'
 
       protected
 
