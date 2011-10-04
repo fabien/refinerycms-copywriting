@@ -1,11 +1,11 @@
 class AddPhraseType < ActiveRecord::Migration
 
-  def self.up
-    add_column :copywriting_phrases, :phrase_type, :string
+  def up
+    add_column ::Refinery::CopywritingPhrase, :phrase_type, :string
   end
 
-  def self.down
-    remove_column :copywriting_phrases, :phrase_type
+  def down
+    remove_column ::Refinery::CopywritingPhrase, :phrase_type
   end
 
 end

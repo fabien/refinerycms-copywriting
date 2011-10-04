@@ -5,7 +5,7 @@
       <% copywriting_phrases.each do |phrase| %>
         <li>
           <% f.fields_for :copywriting_phrases, phrase do |p| %>
-            <%= render :partial => '/admin/shared/copywriting_phrases/value_field', :locals => {:f => p} %>
+            <%= render :partial => '/refinery/admin/shared/copywriting_phrases/value_field', :locals => {:f => p} %>
           <% end %>
         </li>
       <% end %>

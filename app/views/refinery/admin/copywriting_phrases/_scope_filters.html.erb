@@ -1,0 +1,16 @@
+<ul class='collapsible_menu closed'>
+  <li>
+    <% title = @scope ? t('.filtered_by', :filter_scope => @scope.capitalize) : t('.filter_by_scope') %>
+    <%= link_to title, '#', :style => 'background-image: url(\'/assets/refinery/icons/zoom.png\');' %>
+  </li>
+  <% if @scope %>
+  <li>
+    <%= link_to t('.clear_scope_filter'), main_app.url_for(:filter_scope => nil, :switch_locale => @current_locale) %>
+  </li>
+  <% end %>
+  <% (@scopes - [@scope]).each do |s| %>
+    <li class='<%= s == @scope ? 'selected' : 'closed' %>'>
+      <%= link_to s.capitalize, main_app.url_for(:filter_scope => s, :switch_locale => @current_locale) %>
+    </li>
+  <% end %>
+</ul>

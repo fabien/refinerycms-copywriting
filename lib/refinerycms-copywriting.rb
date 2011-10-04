@@ -3,12 +3,8 @@ require 'refinerycms-base'
 module Refinery
   module Copywriting
     class Engine < Rails::Engine
-      initializer "static assets" do |app|
-        app.middleware.insert_after ::ActionDispatch::Static, ::ActionDispatch::Static, "#{root}/public"
-      end
-
       config.to_prepare do
-        Page.module_eval do
+        Refinery::Page.module_eval do
           has_many :copywriting_phrases, :dependent => :destroy
           accepts_nested_attributes_for :copywriting_phrases, :allow_destroy => false
           attr_accessible :copywriting_phrases_attributes
@@ -19,18 +15,18 @@ module Refinery
         ::ApplicationController.helper(CopywritingHelper)
       end
 
-      config.after_initialize do
-        ::Refinery::Pages::Tab.register do |tab|
+      initializer "init plugin", :after => :set_routes_reloader do |app|
+        Refinery::Pages::Tab.register do |tab|
           tab.name = 'copywriting'
-          tab.partial = '/admin/pages/tabs/copywriting'
+          tab.partial = '/refinery/admin/pages/tabs/copywriting'
         end
         Refinery::Plugin.register do |plugin|
           plugin.name = 'refinerycms_copywriting'
-          plugin.url = {:controller => '/admin/copywriting_phrases', :action => 'index'}
+          plugin.url = app.routes.url_helpers.refinery_admin_copywriting_phrases_path
           plugin.menu_match = /copywriting/
           plugin.activity = {
-            :class => CopywritingPhrase,
-            :title => 'Key'
+            :class => Refinery::CopywritingPhrase,
+            :title => 'name'
           }
         end
       end

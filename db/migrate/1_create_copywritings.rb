@@ -1,7 +1,7 @@
 class CreateCopywritings < ActiveRecord::Migration
 
-  def self.up
-    create_table :copywriting_phrases do |t|
+  def up
+    create_table ::Refinery::CopywritingPhrase.table_name do |t|
       t.string :name
       t.text :default
       t.text :value
@@ -11,15 +11,15 @@ class CreateCopywritings < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :copywriting_phrases, [:name, :scope]
+    add_index ::Refinery::CopywritingPhrase, [:name, :scope]
 
     load(Rails.root.join('db', 'seeds', 'copywritings.rb'))
   end
 
-  def self.down
-    UserPlugin.destroy_all({:name => "refinerycms_copywriting"})
+  def down
+    ::Refinery::UserPlugin.destroy_all({:name => "refinerycms_copywriting"})
 
-    drop_table :copywriting_phrases
+    drop_table ::Refinery::CopywritingPhrase
   end
 
 end
