@@ -25,7 +25,7 @@ module Refinery
           plugin.url = app.routes.url_helpers.refinery_admin_copywriting_phrases_path
           plugin.menu_match = /copywriting/
           plugin.activity = {
-            :class => Refinery::CopywritingPhrase,
+            :class_name => Refinery::CopywritingPhrase,
             :title => 'name'
           }
         end
