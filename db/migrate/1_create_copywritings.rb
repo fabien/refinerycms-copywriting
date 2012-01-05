@@ -13,11 +13,17 @@ class CreateCopywritings < ActiveRecord::Migration
 
     add_index ::Refinery::CopywritingPhrase, [:name, :scope]
 
-    load(Rails.root.join('db', 'seeds', 'copywritings.rb'))
+    Refinery::Copywriting::Engine.load_seed
   end
 
   def down
-    ::Refinery::UserPlugin.destroy_all({:name => "refinerycms_copywriting"})
+    if defined?(::Refinery::UserPlugin)
+      ::Refinery::UserPlugin.destroy_all({:name => "copywriting"})
+    end
+
+    if defined?(::Refinery::Page)
+      ::Refinery::Page.delete_all({:link_url => "/copywriting"})
+    end
 
     drop_table ::Refinery::CopywritingPhrase
   end
